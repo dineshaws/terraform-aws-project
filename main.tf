@@ -69,5 +69,15 @@ module "supplier_listener_rule_module" {
   target_group_arn = "${module.supplier_tg_module.tg_arn}"
 }
 
+module "platform_launch_config" {
+  source = "./modules/ec2/launch_configuration"
+  name = "platform-launch-configuration-${module.shared_vars.env_suffix}"
+  image_id = "${module.shared_vars.env_platform_ami}"
+  instance_type = "${module.shared_vars.env_platform_instance_type}"
+  iam_instance_profile = ""
+  key_name = "${module.shared_vars.env_platform_keypair}"
+  security_groups = ["${module.security_group_module.platform_sg_id}"]
+}
+
 
 
