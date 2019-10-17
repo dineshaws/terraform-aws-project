@@ -77,7 +77,7 @@ output "platform_sg_id" {
   value = "${aws_security_group.platform_sg.id}"
 }
 
-output "platform_elb_sg_id" {
+output "elb_sg_id" {
   value = "${aws_security_group.platform_elb_sg.id}"
 }
 
