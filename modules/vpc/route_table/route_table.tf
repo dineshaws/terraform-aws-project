@@ -25,11 +25,25 @@ module "shared_vars" {
 }
 
 
-resource "aws_route" "main_route_table_route" {
-  route_table_id = "${var.main_rt_id}"
-  gateway_id = "${var.igw_id}"
-  destination_cidr_block = "0.0.0.0/0"
+# resource "aws_route" "main_route_table_route" {
+#   route_table_id = "${var.main_rt_id}"
+#   gateway_id = "${var.igw_id}"
+#   destination_cidr_block = "0.0.0.0/0"
+# }
+
+resource "aws_default_route_table" "default_rt" {
+  default_route_table_id = "${var.main_rt_id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = "${var.igw_id}"
+  }
+
+  tags = {
+    Name = "Public RT ${module.shared_vars.env_suffix}"
+  }
 }
+
 
 
 resource "aws_route_table" "rt-private" {

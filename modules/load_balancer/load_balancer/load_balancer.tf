@@ -15,7 +15,7 @@ resource "aws_lb" "platform_lb" {
   load_balancer_type = "application"
   security_groups    = ["${var.elb_sg_id}"]
   subnets            = "${var.subnets}" // this is set of subnets
-  enable_deletion_protection = true
+  enable_deletion_protection = false
   tags = {
     Environment = "${module.shared_vars.env_suffix}"
   }

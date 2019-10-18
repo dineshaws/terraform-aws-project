@@ -79,5 +79,22 @@ module "platform_launch_config" {
   security_groups = ["${module.security_group_module.platform_sg_id}"]
 }
 
+module "asg_buyer" {
+  source = "./modules/ec2/asg"
+  subnets = ["${module.subnet_module.subnet_public_a_id}", "${module.subnet_module.subnet_public_b_id}"]
+  tg_identifier = "Buyer"
+  lc_name = "${module.platform_launch_config.lc_name}"
+  tg_arn = "${module.buyer_tg_module.tg_arn}"
+}
+
+module "asg_supplier" {
+  source = "./modules/ec2/asg"
+  subnets = ["${module.subnet_module.subnet_public_a_id}", "${module.subnet_module.subnet_public_b_id}"]
+  tg_identifier = "Supplier"
+  lc_name = "${module.platform_launch_config.lc_name}"
+  tg_arn = "${module.supplier_tg_module.tg_arn}"
+}
+
+
 
 
