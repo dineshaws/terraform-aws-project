@@ -23,7 +23,7 @@ resource "aws_launch_configuration" "as_conf" {
   instance_type = "${var.instance_type}"
   iam_instance_profile = "${var.iam_instance_profile}"
   key_name = "${var.key_name}"
-  security_groups = "${var.security_groups}" # this is array
+  security_groups = "${var.security_groups}" # this is list
 }
 
 output "launch_config_id" {

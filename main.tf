@@ -96,5 +96,17 @@ module "asg_supplier" {
 }
 
 
+# attaching auto scaling group policy to buyer asg
+module "asg_buyer_policy" {
+  source = "./modules/ec2/asg_policy"
+  asg_name = "${module.asg_buyer.asg_name}"
+  target_name = "Buyer"
+}
 
+# attaching auto scaling group policy to supplier asg
+module "asg_supplier_policy" {
+  source = "./modules/ec2/asg_policy"
+  asg_name = "${module.asg_supplier.asg_name}"
+  target_name = "Supplier"
+}
 

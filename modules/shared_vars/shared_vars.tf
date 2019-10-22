@@ -26,6 +26,26 @@ locals {
         production = "t2.micro"
     }
     env_platform_instance_type = "${lookup(local.env_platform_instance_type_map, local.env)}"
+
+    env_asg_buyer_config_map = {
+        default = {
+            min = 1
+            max = 1
+            desired = 1
+        }
+        staging = {
+            min = 1
+            max = 1
+            desired = 1
+        }
+        production = {
+            min = 2
+            max = 1
+            desired = 2
+        }
+    }
+    env_asg_buyer_config = "${lookup(local.env_asg_buyer_config_map, local.env)}"
+
 }
 
 output "env_suffix" {
@@ -42,4 +62,8 @@ output "env_platform_keypair" {
 
 output "env_platform_instance_type" {
     value = "${local.env_platform_instance_type}"
+}
+
+output "env_asg_buyer_config" {
+  value = "${local.env_asg_buyer_config}"
 }
