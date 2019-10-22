@@ -110,3 +110,23 @@ module "asg_supplier_policy" {
   target_name = "Supplier"
 }
 
+
+# Create EFS file system
+module "platform_efs" {
+  source = "./modules/efs/efs_file_system"
+  unique_token = "platform-efs"
+}
+# EFS Mount Target on public subnet a
+module "platform_efs_mount_a" {
+  source = "./modules/efs/efs_mount_target"
+  file_system_id = "${module.platform_efs.file_system_id}"
+  subnet_id = "${module.subnet_module.subnet_public_a_id}"
+}
+# EFS Mount Target on public subnet b
+module "platform_efs_mount_b" {
+  source = "./modules/efs/efs_mount_target"
+  file_system_id = "${module.platform_efs.file_system_id}"
+  subnet_id = "${module.subnet_module.subnet_public_b_id}"
+}
+
+
