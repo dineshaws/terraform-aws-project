@@ -139,3 +139,22 @@ module "sqs_queue_ht" {
   wait_time         = "10"
 }
 
+# Launch EC2 instance 
+module "platform_ec2_instance" {
+  source               = "./modules/ec2/ec2_instance"
+  name                 = "FOO-${module.shared_vars.env_suffix}"
+  ami_id               = "${module.shared_vars.env_platform_ami}"
+  instance_type        = "${module.shared_vars.env_platform_instance_type}"
+  iam_instance_profile = ""
+  key_name             = "${module.shared_vars.env_platform_keypair}"
+  security_groups      = ["${module.security_group_module.platform_sg_id}"]
+  subnet_id            = "${module.subnet_module.subnet_public_a_id}"
+}
+
+# Create Kinesis Stream
+module "platform_kinesis_stream" {
+  source           = "./modules/kinesis/kinesis_stream"
+  name             = "Foo-${module.shared_vars.env_suffix}"
+  shard_count      = "1"
+  retention_period = "48"
+}
